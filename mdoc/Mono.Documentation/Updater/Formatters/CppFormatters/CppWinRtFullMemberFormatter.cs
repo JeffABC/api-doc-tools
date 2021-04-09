@@ -45,8 +45,6 @@ namespace Mono.Documentation.Updater.Formatters.CppFormatters
 
                 foreach (var str in splitType)
                 {
-                    if (str == "modopt(System.Runtime.CompilerServices.IsConst)" && typeToCompare == "System.Guid&")
-                        return "winrt::guid";
                     if (str == "modopt(System.Runtime.CompilerServices.IsLong)" && typeToCompare == "System.Int32")
                         return "long";
                     if (str == "modopt(System.Runtime.CompilerServices.IsSignUnspecifiedByte)" &&
