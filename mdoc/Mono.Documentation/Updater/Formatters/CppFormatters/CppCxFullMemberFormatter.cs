@@ -131,13 +131,6 @@ namespace Mono.Documentation.Updater.Formatters.CppFormatters
                 case "System.Object": typeToCompare = "Platform::Object"; break;
                 case "System.Type": typeToCompare = "Platform::Type"; break;
                 case "System.Attribute": typeToCompare = "Platform::Metadata::Attribute"; break;
-                case "Windows.Foundation.Numerics.Matrix3x2": typeToCompare = "float3x2"; break;
-                case "Windows.Foundation.Numerics.Matrix4x4": typeToCompare = "float4x4"; break;
-                case "Windows.Foundation.Numerics.Plane": typeToCompare = "plane"; break;
-                case "Windows.Foundation.Numerics.Quaternion": typeToCompare = "quaternion"; break;
-                case "Windows.Foundation.Numerics.Vector2": typeToCompare = "float2"; break;
-                case "Windows.Foundation.Numerics.Vector3": typeToCompare = "float3"; break;
-                case "Windows.Foundation.Numerics.Vector4": typeToCompare = "float4"; break;
             }
 
             if (splitType != null)
@@ -209,10 +202,9 @@ namespace Mono.Documentation.Updater.Formatters.CppFormatters
 
             buf.Append(GetTypeKind(type));
             buf.Append(" ");
-            var cppType = GetCppType(type.FullName);
-            buf.Append(cppType == null
+            buf.Append(GetCppType(type.FullName) == null
                     ? GetNameWithOptions(type, false, false)
-                    : cppType);
+                    : type.Name);
 
             if (type.IsAbstract && !type.IsInterface)
                 buf.Append(" abstract");

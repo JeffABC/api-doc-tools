@@ -10,7 +10,7 @@ namespace Mono.Documentation.Updater.Formatters.CppFormatters
     public class CppWinRtFullMemberFormatter : CppCxFullMemberFormatter
     {
         protected override bool AppendHatOnReturn => false;
-        protected override string HatModifier => $" const{RefTypeModifier}";
+        protected override string HatModifier => $" const&";
         public override string Language => Consts.CppWinRt;
         protected override string RefTypeModifier => " &";
 
@@ -73,13 +73,6 @@ namespace Mono.Documentation.Updater.Formatters.CppFormatters
                 case "System.String": typeToCompare = "winrt::hstring"; break;
                 case "System.Guid": typeToCompare = "winrt::guid"; break;
                 case "System.Object": typeToCompare = "winrt::Windows::Foundation::IInspectable"; break;
-                case "Windows.Foundation.Numerics.Matrix3x2": typeToCompare = "float3x2"; break;
-                case "Windows.Foundation.Numerics.Matrix4x4": typeToCompare = "float4x4"; break;
-                case "Windows.Foundation.Numerics.Plane": typeToCompare = "plane"; break;
-                case "Windows.Foundation.Numerics.Quaternion": typeToCompare = "quaternion"; break;
-                case "Windows.Foundation.Numerics.Vector2": typeToCompare = "float2"; break;
-                case "Windows.Foundation.Numerics.Vector3": typeToCompare = "float3"; break;
-                case "Windows.Foundation.Numerics.Vector4": typeToCompare = "float4"; break;
             }
 
             if (splitType != null)
@@ -106,7 +99,12 @@ namespace Mono.Documentation.Updater.Formatters.CppFormatters
                     buf.AppendFormat("... ");
             }
 
-            buf.Append(GetTypeNameWithOptions(parameter.ParameterType, !AppendHatOnReturn)).Append(" ");
+            buf.Append(GetTypeName(parameter.ParameterType, EmptyAttributeParserContext.Empty()));
+            if (!parameter.ParameterType.IsByReference && !parameter.ParameterType.IsPointer)
+            {
+                buf.Append(parameter.IsOut ? RefTypeModifier : HatModifier);
+            }
+            buf.Append(" ");
             buf.Append(parameter.Name);
 
             if (parameter.HasDefault && parameter.IsOptional && parameter.HasConstant)
@@ -207,10 +205,9 @@ namespace Mono.Documentation.Updater.Formatters.CppFormatters
 
             buf.Append(GetTypeKind(type));
             buf.Append(" ");
-            var cppType = GetCppType(type.FullName);
-            buf.Append(cppType == null
+            buf.Append(GetCppType(type.FullName) == null
                     ? GetNameWithOptions(type, false, false)
-                    : cppType);
+                    : type.Name);
 
             if (type.IsAbstract && !type.IsInterface)
                 buf.Append(" abstract");
