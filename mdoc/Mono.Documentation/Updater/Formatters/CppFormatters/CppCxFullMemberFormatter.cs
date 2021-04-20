@@ -112,24 +112,24 @@ namespace Mono.Documentation.Updater.Formatters.CppFormatters
 
             switch (typeToCompare)
             {
-                case "System.Byte": typeToCompare = "byte"; break;
-                case "System.Int16": typeToCompare = "short"; break;
-                case "System.Int32": typeToCompare = "int"; break;
-                case "System.Int64": typeToCompare = "long long"; break;
+                case "System.Byte": typeToCompare = "int8"; break;
+                case "System.Int16": typeToCompare = "int16"; break;
+                case "System.Int32": typeToCompare = "int32"; break;
+                case "System.Int64": typeToCompare = "int64"; break;
 
-                case "System.UInt16": typeToCompare = "unsigned short"; break;
-                case "System.UInt32": typeToCompare = "unsigned int"; break;
-                case "System.UInt64": typeToCompare = "unsigned long long"; break;
+                case "System.UInt16": typeToCompare = "uint16"; break;
+                case "System.UInt32": typeToCompare = "uint32"; break;
+                case "System.UInt64": typeToCompare = "uint64"; break;
 
-                case "System.Single": typeToCompare = "float"; break;
-                case "System.Double": typeToCompare = "double"; break;
-                case "System.Boolean": typeToCompare = "bool"; break;
+                case "System.Single": typeToCompare = "float32"; break;
+                case "System.Double": typeToCompare = "float64"; break;
                 case "System.Char": typeToCompare = "char16"; break;
                 case "System.Void": typeToCompare = "void"; break;
+                case "System.Type": typeToCompare = "Platform::Type"; break;
                 case "System.Guid": typeToCompare = "Platform::Guid"; break;
                 case "System.String": typeToCompare = "Platform::String"; break;
                 case "System.Object": typeToCompare = "Platform::Object"; break;
-                case "System.Type": typeToCompare = "Platform::Type"; break;
+                case "System.Boolean": typeToCompare = "Platform::Boolean"; break;
                 case "System.Attribute": typeToCompare = "Platform::Metadata::Attribute"; break;
                 case "Windows.Foundation.Numerics.Matrix3x2": typeToCompare = "float3x2"; break;
                 case "Windows.Foundation.Numerics.Matrix4x4": typeToCompare = "float4x4"; break;
