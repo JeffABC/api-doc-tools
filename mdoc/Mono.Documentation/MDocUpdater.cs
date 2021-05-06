@@ -320,6 +320,8 @@ namespace Mono.Documentation
                 if (File.Exists(typeMapPath))
                 {
                     Console.WriteLine($"Loading typemap file at {typeMapPath}");
+                    if (!Directory.Exists(srcPath))
+                        Directory.CreateDirectory(srcPath);
                     File.Copy(typeMapPath, Path.Combine(srcPath, "TypeMap.xml"), true);
                     TypeMap map = TypeMap.FromXml(typeMapPath);
                     this.TypeMap = map;
@@ -3870,9 +3872,22 @@ namespace Mono.Documentation
             NormalizeWhitespace(e);
         }
 
+        private bool ProcessedMoreThanOnce(FrameworkTypeEntry typeEntry)
+        {
+            if (typeEntry.TimesProcessed <= 1)
+            {
+                return false;
+            }
+            else
+            {
+                var assemblies = this.assemblies.Where(a => a.Name == typeEntry.Framework.Name).ToList();
+                return assemblies.Any(a => a.IsTypeForwardingTo(typeEntry));
+            }
+        }
+
         public void MakeParameters (XmlElement root, MemberReference member, IList<ParameterDefinition> parameters, FrameworkTypeEntry typeEntry, ref bool fxAlternateTriggered, bool shouldDuplicateWithNew = false)
         {
-            if (typeEntry.TimesProcessed > 1)
+            if (ProcessedMoreThanOnce(typeEntry))
                 return;
 
             XmlElement e = WriteElement (root, "Parameters");
