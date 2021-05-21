@@ -108,13 +108,6 @@ namespace mdoc.Test
         }
 
         [Test]
-        [Category("Field")]
-        public void Field_WinRtNumericsPlaneNormal()
-        {
-            TestFieldSignature(_cppWinRtTestLibName, "Windows.Foundation.Numerics.Plane", "Normal", "public: float3 Normal;");
-        }
-
-        [Test]
         [Category("Event")]
         public void Event_Class1_primeFoundEvent()
         {
