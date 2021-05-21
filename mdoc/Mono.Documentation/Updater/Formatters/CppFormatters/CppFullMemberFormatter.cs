@@ -112,7 +112,7 @@ namespace Mono.Documentation.Updater.Formatters.CppFormatters
             string typeFullName = type.FullName;
             if (string.IsNullOrWhiteSpace (typeFullName))
                 return buf;
-            
+
             string cppType = GetCppType(typeFullName);
             if (cppType != null)
             {
