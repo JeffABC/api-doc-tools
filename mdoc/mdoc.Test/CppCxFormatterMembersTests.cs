@@ -95,6 +95,13 @@ namespace mdoc.Test
 
         [Test]
         [Category("Field")]
+        public void Field_WinRtNumericsPlaneNormal()
+        {
+            TestFieldSignature(_cppWinRtTestLibName, "Windows.Foundation.Numerics.Plane", "Normal", "public: float3 Normal;");
+        }
+
+        [Test]
+        [Category("Field")]
         public void Field_ValueType_String()
         {
             TestFieldSignature(CppCxTestLibName, "Namespace2.Class4", "StringField", "public: Platform::String ^ StringField;");
